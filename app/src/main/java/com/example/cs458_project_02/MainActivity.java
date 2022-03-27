@@ -8,6 +8,8 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,13 +22,15 @@ import android.widget.TextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "MyActivity";
     //containers
     EditText birthDate;
     TextInputLayout name, city;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
+
 
         // array for genders choice in spinner
         String[] genders = {"Your Gender", "Female", "Male", "Not Specify"};
@@ -133,6 +138,23 @@ public class MainActivity extends AppCompatActivity {
                 String vac = vaccine.getSelectedItem().toString();
                 String sideEff = sideEffect.getSelectedItem().toString();
                 String pos = posTest.getSelectedItem().toString();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+                Date bDate = null;
+                try {
+                    bDate = format.parse(birth);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Date curDate = new Date();
+                int days = 0;
+                if(bDate != null){
+                    Long age = curDate.getTime() - bDate.getTime();
+                    long seconds = age / 1000;
+                    long minutes = seconds / 60;
+                    long hours = minutes / 60;
+                    days = ((int) (long) hours / 24);
+                }
+
                 if (surname.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Name-Surname is Empty").
@@ -144,7 +166,20 @@ public class MainActivity extends AppCompatActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                } else if (gen.equals("Your Gender")) {
+                }
+                else if(!surname.matches("^([A-Za-z]+)(\\s[A-Za-z]+)*\\s?$")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Name-Surname is Wrong Format").
+                            setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if (gen.equals("Your Gender")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your Gender").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -158,6 +193,30 @@ public class MainActivity extends AppCompatActivity {
                 } else if (birth.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your Birth Date").
+                            setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if(bDate.after(curDate)){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Invalid Birth Date").
+                            setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if(days < 6571){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Too Young to Be Vaccinated").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
