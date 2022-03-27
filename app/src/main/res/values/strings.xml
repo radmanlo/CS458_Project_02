@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CS458_Project_02</string>
+    <string-array name="gender">
+        <item>Gender</item>
+        <item>Female</item>
+        <item>Male</item>
+        <item>Not to be shared</item>
+    </string-array>
+    <string-array name="vaccine">
+        <item>Vaccine type applied</item>
+        <item>Oxford–AstraZeneca</item>
+        <item>Pfizer–BioNTech</item>
+        <item>Janssen</item>
+        <item>Moderna</item>
+        <item>Sinopharm BIBP</item>
+        <item>Sputnik V</item>
+        <item>CoronaVac</item>
+        <item>other</item>
+    </string-array>
+    <string-array name="SideEffect">
+        <item>Any side effect after vaccination</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+    <string-array name="PositiveTest">
+        <item>Any PCR positive cases and Covid-19 symptoms after 3rd vaccination</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+</resources>
