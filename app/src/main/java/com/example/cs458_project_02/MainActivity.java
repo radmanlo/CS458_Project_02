@@ -166,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                } else if (cityC.isEmpty()) {
+                }
+                else if (cityC.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your City").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
