@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     //containers
     EditText birthDate;
     TextInputLayout name, city;
-    Spinner gender, vaccine, sideEffect, posTest;
+    Spinner gender, vaccinate, vaccine, sideEffect, posTest;
     Button submit;
     TextView display;
 
@@ -54,7 +54,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // array for genders choice in spinner
-        String[] genders = {"Your Gender", "Female", "Male", "Not Specify"};
+        String[] genders = {"Your Gender", "Female", "Male", "Not To Share"};
+
+        // array for are you vaccinated choice in spinner
+        String[] vac = {"Are You Vaccinated", "Yes", "No"};
 
         // array for Vaccinate Type choice in spinner
         String[] vaccineTypes = {"Your Vaccine Type",
@@ -75,18 +78,21 @@ public class MainActivity extends AppCompatActivity {
 
         //adapter for each spinner
         ArrayAdapter<String> genderAdapter;
+        ArrayAdapter<String> vacAdapter;
         ArrayAdapter<String> vaccineAdapter;
         ArrayAdapter<String> sideEffectAdapter;
         ArrayAdapter<String> posCaseAdapter;
 
         //style of adapter
         genderAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, genders);
+        vacAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, vac);
         vaccineAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, vaccineTypes);
         sideEffectAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sideEffects);
         posCaseAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, posCases);
 
         //dropdown style
         genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vacAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vaccineAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sideEffectAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         posCaseAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         //specifying the containers
         name = findViewById(R.id.NameInput);
         gender = findViewById(R.id.gender);
+        vaccinate = findViewById(R.id.vac);
         birthDate = findViewById(R.id.Date);
         city = findViewById(R.id.CityInput);
         sideEffect = findViewById(R.id.SideEffect);
@@ -103,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
         //specifying the spinners Items
         gender.setAdapter(genderAdapter);
+        vaccinate.setAdapter(vacAdapter);
         sideEffect.setAdapter(sideEffectAdapter);
         vaccine.setAdapter(vaccineAdapter);
         posTest.setAdapter(posCaseAdapter);
@@ -133,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String surname = name.getEditText().getText().toString();
                 String gen = gender.getSelectedItem().toString();
+                String vacci = vaccinate.getSelectedItem().toString();
                 String birth = birthDate.getText().toString();
                 String cityC = city.getEditText().getText().toString();
                 String vac = vaccine.getSelectedItem().toString();
@@ -225,6 +234,58 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
+                else if(vacci.equals("Are You Vaccinated")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Please Specify Your Are Vaccinated or not").
+                            setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if(vacci.equals("No")){
+                    if (gen.equals("Female")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Thank You Mis." + surname + " For Your Participation").
+                                setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        name.getEditText().getText().clear();
+                                        birthDate.getText().clear();
+                                        city.getEditText().getText().clear();
+                                        gender.setAdapter(genderAdapter);
+                                        vaccinate.setAdapter(vacAdapter);
+                                        sideEffect.setAdapter(sideEffectAdapter);
+                                        vaccine.setAdapter(vaccineAdapter);
+                                        posTest.setAdapter(posCaseAdapter);
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                    else{
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setMessage("Thank You Mr." + surname + " For Your Participation").
+                                setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        name.getEditText().getText().clear();
+                                        birthDate.getText().clear();
+                                        city.getEditText().getText().clear();
+                                        vaccinate.setAdapter(vacAdapter);
+                                        gender.setAdapter(genderAdapter);
+                                        sideEffect.setAdapter(sideEffectAdapter);
+                                        vaccine.setAdapter(vaccineAdapter);
+                                        posTest.setAdapter(posCaseAdapter);
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                }
                 else if (cityC.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your City").
@@ -249,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
-                else if (vac.equals("Vaccine type applied")) {
+                else if (vac.equals("Your Vaccine Type")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your Vaccine Type").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -271,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                } else if (pos.equals("Any PCR positive cases and Covid-19 symptoms after 3rd vaccination")) {
+                } else if (pos.equals("Any positive case after 3rd dose of vaccination")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Positive Cases").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -285,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     if (gen.equals("Female")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Thank You Mis." + surname + " Participation").
+                        builder.setMessage("Thank You Mis." + surname + " For Your Participation").
                                 setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -293,6 +354,7 @@ public class MainActivity extends AppCompatActivity {
                                         birthDate.getText().clear();
                                         city.getEditText().getText().clear();
                                         gender.setAdapter(genderAdapter);
+                                        vaccinate.setAdapter(vacAdapter);
                                         sideEffect.setAdapter(sideEffectAdapter);
                                         vaccine.setAdapter(vaccineAdapter);
                                         posTest.setAdapter(posCaseAdapter);
@@ -303,13 +365,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Thank You Mr." + surname + " Participation").
+                        builder.setMessage("Thank You Mr." + surname + " For Your Participation").
                                 setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         name.getEditText().getText().clear();
                                         birthDate.getText().clear();
                                         city.getEditText().getText().clear();
+                                        vaccinate.setAdapter(vacAdapter);
                                         gender.setAdapter(genderAdapter);
                                         sideEffect.setAdapter(sideEffectAdapter);
                                         vaccine.setAdapter(vaccineAdapter);

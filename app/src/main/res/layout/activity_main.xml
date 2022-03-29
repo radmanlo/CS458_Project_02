@@ -45,7 +45,7 @@
         android:text="Submit"
         app:layout_constraintTop_toBottomOf="@+id/positiveTest"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="158dp" />
+        tools:layout_editor_absoluteX="160dp" />
 
     <Spinner
         android:id="@+id/gender"
@@ -63,7 +63,7 @@
         android:entries="@array/SideEffect"
         app:layout_constraintTop_toBottomOf="@+id/vaccinateType"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="19dp" />
+        tools:layout_editor_absoluteX="15dp" />
 
     <Spinner
         android:id="@+id/positiveTest"
@@ -79,9 +79,9 @@
         android:layout_width="367dp"
         android:layout_height="55dp"
         android:entries="@array/vaccine"
-        app:layout_constraintTop_toBottomOf="@+id/CityInput"
+        app:layout_constraintTop_toBottomOf="@+id/vac"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="19dp" />
+        tools:layout_editor_absoluteX="16dp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/birthDate"
@@ -98,5 +98,12 @@
             android:hint="Birth date"
             android:inputType="date" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/vac"
+        android:layout_width="363dp"
+        android:layout_height="61dp"
+        app:layout_constraintTop_toBottomOf="@+id/CityInput"
+        tools:layout_editor_absoluteX="19dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
