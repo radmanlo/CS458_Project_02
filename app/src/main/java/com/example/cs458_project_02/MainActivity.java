@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 String sideEff = sideEffect.getSelectedItem().toString();
                 String pos = posTest.getSelectedItem().toString();
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-                Date bDate = null;
+                Date bDate = new Date();;
                 try {
                     bDate = format.parse(birth);
                 } catch (ParseException e) {
@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                     long hours = minutes / 60;
                     days = ((int) (long) hours / 24);
                 }
-
                 if (surname.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Name-Surname is Empty").
@@ -202,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                     AlertDialog alert = builder.create();
                     alert.show();
                 }
-                else if(bDate.after(curDate)){
+                else if(bDate.after(curDate) || curDate.equals(bDate)){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Invalid Birth Date").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -216,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else if(days < 6571){
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Too Young to Be Vaccinated").
+                    builder.setMessage("Too Young to Be Vaccinated or Invalid Birth Date").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
@@ -237,7 +236,20 @@ public class MainActivity extends AppCompatActivity {
                             });
                     AlertDialog alert = builder.create();
                     alert.show();
-                } else if (vac.equals("Vaccine type applied")) {
+                }
+                else if(!cityC.matches("^([A-Za-z]+)(\\s[A-Za-z]+)*\\s?$")){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Name-Surname is Wrong Format").
+                            setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if (vac.equals("Vaccine type applied")) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Please Specify Your Vaccine Type").
                             setPositiveButton("ok", new DialogInterface.OnClickListener() {
