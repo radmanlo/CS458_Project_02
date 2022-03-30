@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                 else if(vacci.equals("No")){
                     if (gen.equals("Female")) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Thank You Mis." + surname + " For Your Participation").
+                        builder.setMessage("Thank You Mis." + surname + " For Participation But You Are Not Vaccinated").
                                 setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                        builder.setMessage("Thank You Mr." + surname + " For Your Participation").
+                        builder.setMessage("Thank You Mr." + surname + " For Participation But You Are Not Vaccinated").
                                 setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
